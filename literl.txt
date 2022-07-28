@@ -1,0 +1,270 @@
+const Customer = require("../models/Customer");
+
+
+
+
+// exports.crearCustomer = async (req, res) => {
+
+//     try{
+
+//         const products =  await Customer.find()
+
+//        return res.status(202).json({
+//             ok: true,
+//             message: "",
+//             products
+//        })
+//     }catch(error){
+//         console.log(error);
+//         return res.status(500).json({
+//             ok: false,
+//             message: "Ocurrio un error"
+//        })
+//     }
+//}
+exports.crearCustomer = async (req, res) => {
+    try{
+        let customer;
+
+
+          newCustomer =  new Customer(req.body);
+
+         await Customer.save();
+         res.send(Customer);
+
+       return res.status(202).json({
+            ok: true,
+            message: "Customer guardado",
+            product: customer
+       })
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            message: "Ocurrio un error"
+       })
+    }
+};
+
+
+exports.obtenerCustomer= async (req, res) => {
+
+    try {
+
+        const customer = await Customer.find();
+        res.json(customer)
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+
+}
+
+exports.actualizarCustomer= async (req, res) => {
+
+    try {
+        const { Foto, Cedula,Nombre, Apellido, Interes, Comentario } = req.body;
+        let customer = await Customer.findById(req.params.id);
+
+        if(!customer) {
+            res.status(404).json({ msg: 'No existe persona' })
+        }
+        // customer.Foto = Foto;
+        customer.Cedula = Cedula;
+        customer.Nombre = Nombre;
+        customer.Apellido = Apellido;
+        customer.Interes = Interes;
+        customers.Comentario = Comentario;
+
+        customers= await Customer.findOneAndUpdate({ _id: req.params.id },customers, { new: true} )
+        res.json(customers);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+
+exports.obtenerCustomer= async (req, res) => {
+
+    try {
+        let customers = await Customer.findById(req.params.id);
+
+        if(!customers) {
+            res.status(404).json({ msg: 'No existe persona' })
+        }
+       
+        res.json(customers);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.eliminarCustomer = async (req, res) => {
+
+    try {
+        let customers= await Customer.findById(req.params.id);
+
+        if(!customers) {
+            res.status(404).json({ msg: 'No existe persona' })
+        }
+       
+        await Customer.findOneAndRemove({ _id: req.params.id })
+        res.json({ msg: 'se ha eliminado ' });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+-------------------------------------------------------------------------------
+const Customer = require("../models/Customer");
+
+const fs = 'fs-extra';
+
+
+ exports.crearCustomer = async (req, res) => {
+
+    try{
+
+ await Customer.find()
+
+       return res.status(202).json({
+             ok: true,
+             message: "",
+             products
+        })
+     }catch(error){
+         console.log(error);
+         return res.status(500).json({
+             ok: false,
+            message: "Ocurrio un error"
+        })
+     }
+}
+exports.crearCustomer = async (req, res) => {
+    try{
+        let customer;
+
+
+          newCustomer =  new Customer(req.body);
+
+         await Customer.save();
+         res.send(Customer);
+
+       return res.status(202).json({
+            ok: true,
+            message: "Customer guardado",
+            product: customer
+       })
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            message: "Ocurrio un error"
+       })
+    }
+};
+
+
+exports.obtenerCustomer= async (req, res) => {
+
+    try {
+
+        const customer = await Customer.find();
+        res.json(customer)
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+
+}
+
+exports.actualizarCustomer= async (req, res) => {
+
+    try {
+        const { Foto, Cedula,Nombre, Apellido, Interes, Comentario } = req.body;
+        let customer = await Customer.findById(req.params.id);
+
+        if(!customer) {
+            res.status(404).json({ msg: 'No existe persona' })
+        }
+        // customer.Foto = Foto;
+        customer.Cedula = Cedula;
+        customer.Nombre = Nombre;
+        customer.Apellido = Apellido;
+        customer.Interes = Interes;
+        customers.Comentario = Comentario;
+
+        customers= await Customer.findOneAndUpdate({ _id: req.params.id },customers, { new: true} )
+        res.json(customers);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+
+exports.obtenerCustomer= async (req, res) => {
+
+    try {
+        let customers = await Customer.findById(req.params.id);
+
+        if(!customers) {
+            res.status(404).json({ msg: 'No existe persona' })
+        }
+       
+        res.json(customers);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.eliminarCustomer = async (req, res) => {
+
+    try {
+        let customers= await Customer.findById(req.params.id);
+
+        if(!customers) {
+            res.status(404).json({ msg: 'No existe persona' })
+        }
+       
+        await Customer.findOneAndRemove({ _id: req.params.id })
+        res.json({ msg: 'se ha eliminado ' });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+
+    const photoCustomer = {
+        async getImagen( req, res){
+            const type= req.params.type;
+            const imagen =req.params.type;
+            const pathImagen = path.resolve(__dirname, '../../${type}/{imagen}');
+              if (await fs.existsSync(pathImagen)){  
+              res.sendFile(pathImagen);
+        } else{
+            const pathImagen = path.resolve(__dirname, '../../uploads/no-imagen.png')
+            res.sendFile(pathNoImagen);
+        }
+
+    
+        }
+               
+
+
+    }
+}
+    
+
+
