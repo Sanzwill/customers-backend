@@ -11,7 +11,7 @@ app.use(cors());
 
 app.use(express.json());
 
-const newLocal = '/api/Customer';
+const newLocal = '/api/customer';
 app.use(newLocal, require('./routes/customer'));
 
 app.get('/', (req, res) => {
